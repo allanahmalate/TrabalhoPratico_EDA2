@@ -1,14 +1,22 @@
 public class AlgoritmoPRIM 
 {   
-    private int percurso[];
+    private int[] percurso;
     private int cont;
     private Visualizacao vis;
+    private Validacoes val;
     private Sort s;
 
     AlgoritmoPRIM() 
     { 
         vis = new Visualizacao(); 
+        val = new Validacoes();
         s = new Sort();
+    }
+
+    public void executarBFS(Grafo g) 
+    {
+        int inicio = val.escolherVertice("Introduza o inicio do caminho(0-" + (g.getNumVertices()-1) + "): ", g.getV());
+        prim_Transversal(g, inicio);
     }
 
     void prim_Transversal(Grafo g, int inicio)
@@ -16,9 +24,7 @@ public class AlgoritmoPRIM
         boolean[] selecionado = new boolean[g.getNumVertices()];
         int custo[] = new int[g.getNumVertices()];
         int via[] = new int[g.getNumVertices()];
-
         percurso = new int[g.getNumVertices()];
-        cont = 0;
 
         for(int v=0; v < g.getV().length; v++)
         {

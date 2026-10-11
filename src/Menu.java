@@ -159,14 +159,14 @@ public class Menu
             switch(op)
             {
                 case 1: 
-                    System.out.println("----DFS----"); 
+                    System.out.println("----DFS----");
                     AlgoritmoDFS dfs = new AlgoritmoDFS();
-                    dfs.dfs_Transversal(g, 0); 
+                    dfs.executarDFS(g); 
                     break;
                 case 2: 
                     System.out.println("----BFS----"); 
                     AlgoritmoBFS bfs = new AlgoritmoBFS();
-                    bfs.bfs_Transversal(g, 0); 
+                    bfs.executarBFS(g); 
                     break;
                 case 3: menu(); break;
             }

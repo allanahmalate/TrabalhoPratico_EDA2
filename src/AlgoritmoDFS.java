@@ -1,60 +1,37 @@
-import java.util.Stack;
+import java.util.*;
 
 public class AlgoritmoDFS 
 {
-    private int percurso[];
-    private int cont;
     private Visualizacao vis;
+    private Validacoes val;
     AlgoritmoDFS()
-    { vis = new Visualizacao(); }
-
-    
-    void dfs_Transversal(Grafo g, int inicio) 
-    {
-        Stack pilha = new Stack<Integer>();
-        boolean[] explored = new boolean[g.getNumVertices()];
-        percurso = new int[g.getNumVertices()];
-        cont = 0;
-        for(int v=0; v < g.getV().length; v++)
-            explored[v] = false; 
-        dfs_Explore(g, inicio, pilha, explored);
-        vis.visualizarPercurso(percurso);
+    { 
+        vis = new Visualizacao(); 
+        val = new Validacoes();
     }
 
-    void dfs_Explore(Grafo g, int v, Stack pilha, boolean[] explored) 
+    public void executarDFS(Grafo g) 
     {
-        explored[v] = true;
-
-        Vertice[] vizinhos = g.getVizinhosDe(g.getV()[v]);
-        for (int j = 0; j < vizinhos.length; j++) 
-        {   pilha.push(vizinhos[j].getPosicao());  }
-        pilha = dfs_eliminarTratados(pilha, explored);
-    
-        if(!pilha.isEmpty())
-        {
-            int next = (Integer) pilha.pop();
-            cont++;
-            dfs_Explore(g,next, pilha, explored);  
-        }
+        int inicio = val.escolherVertice("Introduza o inicio do caminho(0-" + (g.getNumVertices()-1) + "): ", g.getV());
+        ArrayList<Integer> percurso = dfs_Transversal(g, inicio);
+        vis.visualizarLista(percurso, g);
     }
 
-    Stack dfs_eliminarTratados(Stack pilha, boolean[] explored)
-    {
-        Stack aux = new Stack<Integer>();
-
-        while (!pilha.empty()) 
-        {
-            int elemento = (Integer) pilha.pop();
-
-            if(!explored[elemento])
-                aux.push(elemento);
-        }
-
-        while (!aux.empty()) 
-        {
-            pilha.push(aux.pop());
-        }
-        return pilha;
+    public ArrayList<Integer> dfs_Transversal(Grafo g, int inicio) {
+        ArrayList<Integer> percurso = new ArrayList<>();
+        boolean[] visitado = new boolean[g.getV().length];
+        dfs_Explore(g, inicio, visitado, percurso);
+        return percurso;
     }
 
+    private void dfs_Explore(Grafo g, int u, boolean[] visitado, ArrayList<Integer> percurso) {
+        visitado[u] = true;
+        percurso.add(u);
+        for (Vertice e : g.getVizinhosDe(g.getV()[u])) {
+            int v = g.getAresta(u, e.getPosicao()).getOutroVertice(u);
+            if (!visitado[v]) {
+                dfs_Explore(g, v, visitado, percurso);
+            }
+        }
+    }
 }

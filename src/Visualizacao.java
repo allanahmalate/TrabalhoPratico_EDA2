@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Visualizacao
 {
     Visualizacao() { }
@@ -46,4 +48,17 @@ public class Visualizacao
         visualizarCusto(total);
     }
 
+    public void visualizarLista(ArrayList<Integer> percurso, Grafo g) 
+    {
+        System.out.println("PERCURSO:");
+        if(!percurso.isEmpty())
+        {
+            for(int j=0; j < percurso.size(); j++)
+            {
+                int index = (Integer) percurso.get(j);
+                System.out.print( g.getV()[index].getEtiqueta() + "-" +  g.getV()[index].getPosicao() + " -> ");
+            }
+            System.out.println();
+        }
+    }
 }
