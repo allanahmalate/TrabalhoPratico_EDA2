@@ -10,7 +10,6 @@ public class Grafo
 
     public Vertice[] getV() { return conjuntoEtiquetas; }
     public ArrayList<Aresta> getA() { return conjuntoArestas; }
-    public Aresta getAresta(int origem, int destino) { return procurarAresta(origem,destino); }
     public int getNumVertices() { return numVertices; }
     public int getnumArestas() { return numArestas; }
 
@@ -67,15 +66,14 @@ public class Grafo
         if(!verticeExiste(destino))
             addEtiqueta(null);
 
-        this.conjuntoArestas.add(new Aresta(origem, destino, peso));
-        if(bidirecional)
-            this.conjuntoArestas.add(new Aresta(destino, origem, peso));
+        this.conjuntoArestas.add(new Aresta(origem, destino, peso, bidirecional));
     }
 
     public ArrayList<Aresta> criarArestas()
     {
         String r;
         int o,d,p;
+        boolean b;
 
         ArrayList<Aresta> arestas = new ArrayList<Aresta>();
 
@@ -84,8 +82,9 @@ public class Grafo
             o = val.escolherVertice("Introduza a origem da aresta(0-" + (numVertices-1) + "): ", getV());
             d = val.escolherVertice("Introduza o destino da aresta(0-" + (numVertices-1) + "): ", getV());
             p = val.validarInt("Escolha um peso para a aresta: ");
+            b = val.validarBoolean("A aresta e bidirecional? \n[S] - SIM\n[N] - Nao");
             
-            arestas.add(new Aresta(o, d, p));
+            arestas.add(new Aresta(o, d, p, b));
             
             r = val.desejaContinuar("Deseja adicionar uma nova Aresta? [SIM/NAO]");
         }while(r.equalsIgnoreCase("Sim") || r.equalsIgnoreCase("S"));
@@ -121,9 +120,12 @@ public class Grafo
 
     public boolean arestaExiste(int origem, int destino)
     {
-        for(int i=0; i < this.conjuntoArestas.size(); i++)
+        boolean primeiro, segundo;
+        for(Aresta x : conjuntoArestas)
         {
-            if(this.conjuntoArestas.get(i).getOrigem() == origem && this.conjuntoArestas.get(i).getDestino() == destino)
+            primeiro = x.getOrigem() == origem && x.getDestino() == destino;
+            segundo = x.getOrigem() == destino && x.getDestino() == origem;
+            if(primeiro || segundo)
             { return true; }
         }
 
@@ -152,16 +154,18 @@ public class Grafo
         return false;
     }
 
-    public Aresta procurarAresta(int origem, int destino)
+    public Aresta getAresta(int origem, int destino)
     {
+        boolean primeiro, segundo;
         for(Aresta x : conjuntoArestas)
         {
-            if((x.getOrigem() == origem && x.getDestino() == destino) || (x.getDestino() == origem && x.getOrigem() == destino))
+            primeiro = x.getOrigem() == origem && x.getDestino() == destino;
+            segundo = x.getOrigem() == destino && x.getDestino() == origem;
+            if(primeiro || segundo)
             { return x; }
         }
 
         return null;
     }
-
 
 }

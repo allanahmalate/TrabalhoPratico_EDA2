@@ -106,4 +106,29 @@ public class Validacoes
 
         return d;
     }
+
+    public boolean validarBoolean(String msg)
+    {
+        String d="";
+        boolean valido;
+
+        do
+        {
+            System.out.println(msg);
+            try 
+            { d = br.readLine();}
+            catch(NumberFormatException n) { System.out.println(n.getMessage()); }
+            catch(IOException e) { System.out.println(e.getMessage()); }
+
+            valido = (d.equalsIgnoreCase("Sim") || d.equalsIgnoreCase("S") || 
+                d.equalsIgnoreCase("Nao") || d.equalsIgnoreCase("N"));
+
+            if(!valido)
+            {   System.out.println("Valor Invalido!");  }
+        } while(!valido);
+
+        if(d.equalsIgnoreCase("Nao") || d.equalsIgnoreCase("N"))
+            return false;
+        return true;
+    }
 }
