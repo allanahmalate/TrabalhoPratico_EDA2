@@ -161,6 +161,9 @@ public class Menu
                 case 1: 
                     System.out.println("----DFS----"); 
                     AlgoritmoDFS dfs = new AlgoritmoDFS();
+                    
+                    DFSS df = new DFSS();
+                    df.executar(g);
                     dfs.dfs_Transversal(g, 0); 
                     break;
                 case 2: 

@@ -105,11 +105,13 @@ public class Grafo
                 proximo = this.conjuntoEtiquetas[o.getOrigem()];
                 vizinhosValidos.add(proximo);
             }
+            /*
             if(o.getOrigem() == root.getPosicao())
             {
                 proximo = this.conjuntoEtiquetas[o.getDestino()];
                 vizinhosValidos.add(proximo);
             }
+            */
         }
 
             Vertice[] resultado = new Vertice[vizinhosValidos.size()];
